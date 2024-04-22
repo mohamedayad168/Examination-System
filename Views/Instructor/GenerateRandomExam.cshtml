@@ -1,0 +1,71 @@
+﻿@model Examination_System.Models.Exam
+
+@{
+    ViewData["Title"] = "Generate Random Exam";
+
+}
+
+<div class="row">
+    <div class="col-md-9 m-auto">
+        <div class="card">
+            <div class="card-header text-center">
+                <h2>Generate Random Exam</h2>
+            </div>
+            <div class="card-body">
+                <form asp-action="GenerateRandomExam">
+                    @if (ViewBag.success != null)
+                    {
+                        <div class="alert alert-success my-2" role="alert">
+                            @ViewBag.success
+                        </div>
+                    }
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label for="crsId">Course</label>
+                        <select class="form-select" name="CrsId" id="crsId" asp-items="ViewBag.courses">
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Duration" class="control-label"></label>
+                        <input asp-for="Duration" class="form-control" min="1" />
+                        <span asp-validation-for="Duration" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="GenerationDate" class="control-label"></label>
+                        <input asp-for="GenerationDate" class="form-control" type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                        <span asp-validation-for="GenerationDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="mcqCount" class="control-label">MCQ Count</label>
+                        <input class="form-control" id="mcqCount" name="MCQCount" min="0" type="number" value="0" />
+                    </div>
+                    <div class="form-group">
+                        <label for="mcqDegree" class="control-label">MCQ Degree</label>
+                        <input class="form-control" id="mcqDegree" name="degreeOfMCQ" min="1" type="number" value="1" />
+                    </div>
+                    <div class="form-group">
+                        <label for="tfCount" class="control-label">TF Count</label>
+                        <input class="form-control" id="tfCount" name="TFCount" min="0" type="number" value="0" />
+                    </div>
+                    <div class="form-group">
+                        <label for="tfDegree" class="control-label">TF Degree</label>
+                        <input class="form-control" id="tfDegree" name="degreeOfTF" min="1" type="number" value="1" />
+                    </div>
+                    <div class="form-group text-center">
+                        <input type="submit" value="Create" class="btn btn-primary my-2" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

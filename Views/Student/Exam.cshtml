@@ -1,0 +1,24 @@
+﻿@model Exam
+
+@{
+    ViewData["Title"] = "Exam";
+}
+
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-danger" role="alert">
+    @ViewBag.Message
+    </div>
+}
+else
+{
+    <h1>Exam for @Model.Crs.CrsName</h1>
+    <div class="container text-center">
+        <h3>Exam Duration Is @Model.Duration minutes - Final Grade Is @Model.Crs.CrsGrade</h3>
+    </div>
+
+    <form class="text-center" method="post" asp-action="TakeExam">
+            <input type="submit" class="btn btn-success mt-3" value="Start Exam" asp-route-examID="@Model.ExamId" >
+    </form>
+}

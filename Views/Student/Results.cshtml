@@ -1,0 +1,40 @@
+﻿@model IEnumerable<StudentCourse>
+@{
+    ViewData["Title"] = "Results";
+    Layout = "~/Views/Shared/_StudentLayout.cshtml";
+}
+@if (Model.ToList().Count()>0)
+{
+    <div class="m-2">
+        <a class="btn btn-outline-dark float-end" asp-controller="Reports" asp-action="GetStudentGradesReport" asp-route-stdId="@Model.ToList()[0].StudentId">DownLoad Report</a>
+    </div>
+    <div>
+        <table class="table table-active table-hover text-center mt-4">
+            <thead>
+                <tr>
+                    <th>Course Name</th>
+                    <th>Grade</th>
+                    <th>Full Mark</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td><h5>@item.Crs.CrsName</h5></td>
+                        <td><h5>@item.Grade</h5></td>
+                        <td><h5>@item.Crs.CrsGrade</h5></td>
+                        <td><a class="btn btn-primary" asp-controller="Student" asp-action="ResultDetails" asp-route-id="@item.StudentId" asp-route-crsId="@item.CrsId">Details</a></td>
+                    </tr>
+                }
+        </table>
+
+    </div>
+}
+else
+{
+	<div class="text-center">
+		<h1 class="text-danger">No Results To Show</h1>
+	</div>
+}

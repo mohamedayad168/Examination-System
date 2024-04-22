@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Examination_System.ModelViews.StudentDegree>
+
+<div class="table-responsive my-5">
+    <table class="table table-bordered table-hover">
+        <thead class="table-primary">
+            <tr>
+                <th>Student ID</th>
+                <th>Student Name</th>
+                <th>Degree %</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Any())
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.StudentId)</td>
+                        <td>@Html.DisplayFor(modelItem => item.StudentName)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Degree)</td>
+                        <td>
+                            <a href="javascript:void(0);"
+                               class="btn btn-danger"
+                               onclick="confirmDelete('@item.StudentId', @item.CrsId,  '@item.Degree != NULL')">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr><td colspan="4">No Exam Results Found</td></tr>
+            }
+        </tbody>
+    </table>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    
+}

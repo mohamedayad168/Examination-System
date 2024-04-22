@@ -1,0 +1,68 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.card-header {
+    background-color: #d9534f;
+    color: #fff;
+}
+
+.btn-primary {
+    background-color: #d9534f;
+    border-color: #d43f3a;
+}
+
+    .btn-primary:hover {
+        background-color: #c9302c;
+        border-color: #ac2925;
+    }
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+}
+
+.form-control, .form-select {
+    border-radius: 0;
+}
+
+.nav-link {
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+    background-color: red;
+}
+
+    .nav-link:hover, .nav-link.active {
+        background-color: #007bff; /* Bootstrap primary color, change as needed */
+        color: white !important; /* Ensures text color changes on hover */
+        border-radius: 0.25rem; /* Optional: Adds rounded corners */
+    }
+
+    /* Additional styling for the svg icon */
+    .nav-link svg {
+        fill: currentColor; /* Ensures the icon color matches the text color */
+    }
+
+    /* Ensures the active class has a distinct style if needed */
+    .nav-link.active {
+        font-weight: bold; /* Makes active link bolder */
+        background-color: #0056b3; /* A slightly darker shade for the active link */
+    }

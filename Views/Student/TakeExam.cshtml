@@ -1,0 +1,55 @@
+﻿@model Exam
+
+@{
+    ViewData["Title"] = "TakeExam";
+
+    var ExamQuestions = Model.ExamQuestions.OrderBy(x => Guid.NewGuid()).ToList(); // Randomize the questions
+
+}
+<h1>@Model.Crs.CrsName Exam Remaining Time: <lable id="timer">timer</lable></h1>
+
+<form method="post" action="/Student/Result?examId=@Model.ExamId">
+    @foreach (var question in ExamQuestions)
+    {
+                <div class="input-group m-4">
+                    <div class="card col-10 mx-auto">
+                        <div class="card-header">
+                    @question.Question.QuestionText
+                        </div>
+                        <div class="card-body">
+                            <blockquote class="blockquote mb-0">
+                        @foreach (var option in question.Question.QuestionOptions.OrderBy(x => Guid.NewGuid()))
+                        {
+                                        <div><input type="radio" name="@question.QuestionId" id="@question.QuestionId-@option.OptionNo" value="@option.OptionNo"> <label for="@question.QuestionId-@option.OptionNo">@option.OptionText</label></div>
+                        }
+                            </blockquote>
+                        </div>
+                    </div>
+                </div>
+    }
+    <input type="submit" class="btn btn-success mt-3 d-block mx-auto" value="Submit Exam">
+</form>
+
+<script>
+
+    function updateTime(duration, timer) {
+        let hours = Math.floor(duration / (1000 * 60 * 60));
+        let minutes = Math.floor((duration % (1000 * 60 * 60)) / (1000 * 60));
+        let seconds = Math.floor((duration % (1000 * 60)) / 1000);
+        timer.innerHTML = hours + "h "
+            + minutes + "m " + seconds + "s ";
+    }
+
+    let duration = @Model.Duration *60000;
+    let timer = document.getElementById("timer");
+    updateTime(duration, timer);
+    let x = setInterval(function () {
+        duration -= 1000;
+        updateTime(duration, timer);
+        if (duration < 0) {
+            clearInterval(x);
+            timer.innerHTML = "EXPIRED";
+            document.getElementById("submit").click();
+        }
+    }, 1000);
+</script>

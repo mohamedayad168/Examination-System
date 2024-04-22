@@ -1,0 +1,109 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model Question
+@{
+    ViewBag.Title = "Add Question";
+    //select list from courses
+
+}
+
+<!--
+Boostrap form layout to add a question mcq or true/false
+-->
+ 
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 m-auto">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h2>Add Question</h2>
+                    </div>
+                    <div class="card-body">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link active" id="mcq-tab" data-bs-toggle="tab" href="#mcq" role="tab" aria-controls="mcq" aria-selected="true">MCQ</a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" id="truefalse-tab" data-bs-toggle="tab" href="#truefalse" role="tab" aria-controls="truefalse" aria-selected="false">True/False</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            @if (ViewBag.success != null)
+                            {
+                                <div class="alert alert-success my-2" role="alert">
+                                    @ViewBag.success
+                                </div>
+                            }
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <!-- MCQ Form -->
+                            <div class="tab-pane fade show active p-4" id="mcq" role="tabpanel" aria-labelledby="mcq-tab">
+                                <form method="post" asp-action="AddQuestion" asp-controller="Instructor">
+                                    <input type="hidden" name="QuestionType" value="MCQ" />
+                                    <div class="form-group">
+                                        <label for="crsId">Course</label>
+                                        <select class="form-select" name="CrsId" id="crsId" asp-items="ViewBag.courses" value="Model.CrsId"></select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="question">Question</label>
+                                        <input type="text" class="form-control" id="question" name="QuestionText" placeholder="Enter the question" value="@Model.QuestionText">
+                                    </div>
+                                    <!-- Options Input -->
+                                    <div class="form-group">
+                                        <label for="option1">Option 1</label>
+                                        <input type="text" class="form-control" id="option1" name="options.1" placeholder="Enter the first option">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="option2">Option 2</label>
+                                        <input type="text" class="form-control" id="option2" name="options.2" placeholder="Enter the second option">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="option3">Option 3</label>
+                                        <input type="text" class="form-control" id="option3" name="options.3" placeholder="Enter the third option">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="option4">Option 4</label>
+                                        <input type="text" class="form-control" id="option4" name="options.4" placeholder="Enter the fourth option">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="correct">Correct Answer</label>
+                                        <select class="form-select" name="QuestionAnswer" id="correct">
+                                            <option value="1">Option 1</option>
+                                            <option value="2">Option 2</option>
+                                            <option value="3">Option 3</option>
+                                            <option value="4">Option 4</option>
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary my-2 mx-auto">Submit</button>
+                                </form>
+                            </div>
+
+                            <!-- True/False Form -->
+                            <div class="tab-pane fade p-4" id="truefalse" role="tabpanel" aria-labelledby="truefalse-tab">
+                                <form method="post" asp-action="AddQuestion" asp-controller="Instructor">
+                                    <input type="hidden" name="QuestionType" value="TF" />
+                                    <div class="form-group">
+                                        <label for="crsId">Course</label>
+                                        <select class="form-select" name="CrsId" id="crsId" asp-items="ViewBag.courses"></select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="question">Question</label>
+                                        <input type="text" class="form-control" id="question" name="QuestionText" placeholder="Enter the question">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="correct">Correct Answer</label>
+                                        <select class="form-select" name="QuestionAnswer" id="correct">
+                                            <option value="1">True</option>
+                                            <option value="0">False</option>
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary my-2 mx-auto">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

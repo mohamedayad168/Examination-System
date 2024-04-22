@@ -1,0 +1,58 @@
+﻿@model User
+@{
+	ViewData["Title"] = "Index";
+	Layout = "~/Views/Shared/_StudentLayout.cshtml";
+	var stdResults = ViewBag.stdResults;
+}
+<div class="text-center">
+<h1 class="">Welcome to Student Dashboard</h1>
+	<p>Here you can view your courses, exams, and grades.</p>
+</div>
+<div class="text-center">
+	<h3>Student Information</h3>
+</div>
+<hr />
+<div>
+	<table class="table table-active table-hover">
+		<tr>
+			<td>
+				<h5>Student Name: @Model.UserName</h5>
+			</td>
+			<td>
+				<h5>Student ID: @Model.UserId</h5>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h5>Student Email: @(Model.UserName)@@Std.com</h5>
+			</td>
+			<td>
+				<h5>Student Phone: @Model.UserPhone</h5>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h5>Student Address: @Model.UserAddress</h5>
+			</td>
+			<td>
+				<h5>Student Birthdate: 11/4/2001</h5>
+			</td>
+		</tr>
+	</table>
+</div>
+<div class="row">
+	@foreach (var item in stdResults)
+	{
+		<div style="color:white;background-color:#9D282F" class="d-flex  text-white p-4 m-4 rounded-3 col-5">
+			<div class="m-3">
+				<h3>@item.Crs.CrsName</h3>
+				<p>Course hours = 18 </p>
+				<p>Grades = @item.Crs.CrsGrade</p>
+
+			</div>
+			<div class="text-center m-3">
+				<span class="fs-1"><i class="fa-solid fa-graduation-cap"></i></span>
+			</div>
+		</div>
+	}
+</div>

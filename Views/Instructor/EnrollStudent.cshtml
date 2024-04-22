@@ -1,0 +1,81 @@
+﻿@model StudentCourse
+@{
+    ViewData["Title"] = "Enroll Student into Course";
+}
+
+<h2>@ViewData["Title"]</h2>
+<div class="container">
+    <div class="row">
+        <div class="  col-md-9 m-auto">
+            <div class="card">
+
+@*         <div class="card my-4 col-9">
+ *@            <div class="card-header text-white">
+                Enroll Student
+            </div>
+            <div class="card-body">
+                <form asp-action="EnrollStudent" method="post" id="enrollmentForm">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <span id="enrollmentCheckResult" class="text-danger" style="display:none;"></span>
+
+                    <div class="form-group mb-3 mt-2">
+                        <label asp-for="StudentId">Student</label>
+                        <select asp-for="StudentId" asp-items="ViewBag.Students" class="form-control">
+                            <option value="">Select a Student</option>
+                        </select>
+                        <span asp-validation-for="StudentId" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="CrsId">Course</label>
+                        <select asp-for="CrsId" asp-items="ViewBag.Courses" class="form-control">
+                            <option value="">Select a Course</option>
+                        </select>
+                        <span asp-validation-for="CrsId" class="text-danger "></span>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="button" class="btn btn-danger me-2 mt-3" id="checkEnrollmentBtn"> Enroll</button>
+                        <button type="submit" class=" btn btn-danger d-none">Enroll</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div>
+        </div>
+            </div>
+
+@section Scripts {
+ 
+    <script>
+        $(document).ready(function () {
+            $('#enrollmentForm').submit(function (e) {
+                e.preventDefault();
+            });
+
+            $('#checkEnrollmentBtn').click(function () {
+                var studentId = $('#StudentId').val();
+                var courseId = $('#CrsId').val();
+                var $resultSpan = $('#enrollmentCheckResult'); // Get the result span
+
+                $resultSpan.hide().removeClass('text-success text-danger');
+
+                if (studentId && courseId) {
+                    $.get('@Url.Action("IsStudentEnrolled", "instructor")', { studentId: studentId, courseId: courseId })
+                        .done(function (data) {
+                            if (data.isEnrolled) {
+                                $resultSpan.addClass('text-danger alert alert-danger').text('This student is already enrolled in the selected course.').show();
+                            } else {
+                                $resultSpan.addClass('text-success alert alert-success').text('This student is not enrolled in the selected course. Please wait enrolling...').show();
+                                setTimeout(function () {
+                                    $('#enrollmentForm').unbind('submit').submit();
+                                }, 2000); 
+                            }
+                        });
+                } else {
+                    $resultSpan.addClass('text-danger').text('Please select both a student and a course.').show();
+                }
+            });
+        });
+    </script>
+}
